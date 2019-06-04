@@ -31,3 +31,26 @@
 
 en:
   hello: "Hello world"
+  title_default: "Ruby on Rails Tutorial Sample App - en version"
+  sample_app: "Sample App"
+  kitten_exercise: "Kitten exercise"
+  rails_logo: "Rails logo"
+  sign_up_now: "Sign up now!"
+  ruby_on_rails_tutorial: "Ruby on Rails Tutorial"
+  welcome_to_the_sample_app: "Welcome to the Sample App"
+  this_is_the_home_page_for_the: "This is the home page for the"
+  sample_application: "sample application."
+  home: "Home"
+  help: "Help"
+  log_in: "Log in"
+  nav_menu:
+    about: "About"
+    contact: "Contact"
+    news: "News"
+  development_of_the_site: "Le Van Tung B"
+  the: "The"
+  by: "by"
+  contact_page:
+    contact: "Contact"
+    contact_page: "contact page"
+    contact_text: "Contact the Ruby on Rails Tutorial about the sample app at the"
