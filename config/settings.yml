@@ -2,3 +2,14 @@ link:
   rails_org: "https://www.railstutorial.org/"
   rails_news: "http://news.railstutorial.org/"
   rails_contact: "https://www.railstutorial.org/contact"
+  gavatar: "https://secure.gravatar.com/avatar/"
+size_gravatar: 80
+validates:
+  email:
+    regex: !ruby/regexp /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    lenght: 255
+  name:
+    lenght: 50
+  password:
+    lenght:
+      minimum: 6
