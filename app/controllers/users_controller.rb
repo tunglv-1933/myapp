@@ -1,24 +1,17 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, excerpt: %i(index new create)
 
   def index
     @users = User.all
   end
 
-  def show
-    @user = set_user
-    if @user.nil?
-      render file: "#{Rails.root}/public/404", status: :not_found
-    end
-  end
+  def show; end
 
   def new
     @user = User.new
   end
 
-  def edit
-    @user = set_user
-  end
+  def edit; end
 
   def create
     @user = User.new user_params
@@ -41,19 +34,24 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    flash[:success] = t "user_destroyed"
-    redirect_to users_url
+    if @user.destroy
+      flash[:success] = t "user_destroyed"
+      redirect_to users_url
+    else
+      flash[:danger] = t "some_thing_was_wrong"
+    end
   end
 
   private
 
     def set_user
       @user = User.find_by id: params[:id]
+      return if @user
+      render file: "#{Rails.root}/public/404", status: :not_found
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit :name, :email, :password, :password_confirmation
     end
 
     def not_found
