@@ -47,4 +47,11 @@ en:
   settings: "Settings"
   profile: "Profile"
   account: "Account"
+  remember_me_on_this_computer: "Remember me on this computer"
+  update_your_profile: "Update your profile"
+  save_changes: "Save changes"
+  change: "change"
+  please_log_in: "Please log in."
+  all_users: "All users"
+  delete: "delete"
 
