@@ -3,6 +3,7 @@ link:
   rails_news: "http://news.railstutorial.org/"
   rails_contact: "https://www.railstutorial.org/contact"
   gavatar: "https://secure.gravatar.com/avatar/"
+  gavatar_email: "http://gravatar.com/emails"
 size_gravatar: 80
 validates:
   email:
