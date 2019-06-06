@@ -35,6 +35,6 @@ class User < ApplicationRecord
   end
 
   def forget
-    update_attribute :remember_token, nil
+    update :remember_token, nil
   end
 end
