@@ -17,6 +17,9 @@ gem "rails-i18n"
 gem "config"
 gem "bcrypt", "3.1.12"
 gem "jquery-rails"
+gem "faker", "1.7.3"
+gem "will_paginate", "3.1.7"
+gem "bootstrap-will_paginate", "1.0.0"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
