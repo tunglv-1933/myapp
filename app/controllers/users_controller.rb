@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, excerpt: %i(index new create)
+  before_action :set_user, only: %i(show update destroy)
   before_action :logged_in_user, only: %i(edit, update)
   before_action :correct_user, only: %i(edit, update)
   before_action :admin_user, only: %i(destroy)
 
   def index
-    @users = User.all
+    @users = User.paginate page: params[:page]
   end
 
   def show; end
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find_by id: params[:id]
-      return if @user
+      return if !@user.nil?
       render file: "#{Rails.root}/public/404", status: :not_found
     end
 
