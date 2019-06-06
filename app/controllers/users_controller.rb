@@ -1,14 +1,16 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i(show update destroy)
-  before_action :logged_in_user, only: %i(edit update)
+  before_action :logged_in_user, only: %i(index edit update destroy)
   before_action :correct_user, only: %i(edit update)
   before_action :admin_user, only: %i(destroy)
 
   def index
-    @users = User.page(params[:page]).per(Settings.user_per_page).ordered_by_name(:desc)
+    @users = User.page(params[:page]).per(Settings.user_per_page).order_by_name(:desc)
   end
 
-  def show; end
+  def show
+    @microposts = @user.microposts.page(params[:page]).per(Settings.user_per_page)
+  end
 
   def new
     @user = User.new
@@ -20,9 +22,9 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      log_in user
-      flash[:success] = t "welcome_to_the_sample_app"
-      redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = t "please_check_your_email_to_activate_your_account"
+      redirect_to root_url
     else
       render :new
     end
@@ -75,6 +77,7 @@ class UsersController < ApplicationController
   end
 
   def admin_user
-    redirect_to root_url unless current_user.admin?
+    return if current_user.admin?
+    redirect_to root_url
   end
 end
