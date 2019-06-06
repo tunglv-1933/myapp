@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: Settings.validates.email.lenght }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: Settings.validates.password.lenght.minimum }
   validates :password_confirmation, presence: true, length: { minimum: Settings.validates.password.lenght.minimum }
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   has_secure_password
 
@@ -35,6 +35,6 @@ class User < ApplicationRecord
   end
 
   def forget
-    update_attribute :remember_token, nil
+    update :remember_token, nil
   end
 end
