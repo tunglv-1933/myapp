@@ -54,4 +54,12 @@ en:
   please_log_in: "Please log in."
   all_users: "All users"
   delete: "delete"
-
+  account_activation_message: "Welcome to the Sample App! Click on the link below to activate your account:"
+  activate: "Activate"
+  please_check_your_email_to_activate_your_account: "Please check your email to activate your account."
+  account_activation: "Account activation"
+  account_activated: "Account activated!"
+  invalid_activation_link: "Invalid activation link"
+  account_not_activated: "Account not activated."
+  check_your_email_for_the_activation_link: "Check your email for the activation link."
+  invalid_email_or_password_combination: "Invalid email/password combination"
