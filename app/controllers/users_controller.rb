@@ -8,9 +8,7 @@ class UsersController < ApplicationController
     @users = User.paginate page: params[:page]
   end
 
-  def show
-    redirect_to root_url unless FILL_IN
-  end
+  def show; end
 
   def new
     @user = User.new
@@ -52,7 +50,7 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find_by id: params[:id]
-      return if !@user.nil?
+      return if @user
       render file: "#{Rails.root}/public/404", status: :not_found
     end
 
@@ -65,11 +63,10 @@ class UsersController < ApplicationController
     end
 
     def logged_in_user
-      unless logged_in?
+      return if logged_in?
         store_location
         flash[:danger] = t "please_log_in"
         redirect_to login_url
-      end
     end
 
     def correct_user
