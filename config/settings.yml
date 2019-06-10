@@ -19,3 +19,5 @@ post_per_page: 5
 max_image_size: 5
 max_content_length: 140
 password_reset_expired: 2
+gravatar_small_size: 30
+gravatar_medium_size: 30
