@@ -18,6 +18,10 @@ gem "config"
 gem "bcrypt", "3.1.12"
 gem "jquery-rails"
 gem "kaminari"
+gem "carrierwave", "1.2.2"
+gem "mini_magick", "4.7.0"
+gem "i18n-js"
+gem "figaro"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
@@ -35,6 +39,10 @@ group :test do
   gem "capybara", ">= 2.15"
   gem "selenium-webdriver"
   gem "chromedriver-helper"
+end
+
+group :production do
+  gem "fog", "1.42"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

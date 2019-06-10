@@ -209,6 +209,7 @@ body .field_with_errors {
   list-style: none;
   padding: 0;
   li {
+    display: flex;
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
   }
@@ -218,7 +219,6 @@ body .field_with_errors {
   }
   .content {
     display: block;
-    margin-left: 60px;
     img {
       display: block;
       padding: 5px 0;
@@ -227,10 +227,9 @@ body .field_with_errors {
   .timestamp {
     color: $gray-light;
     display: block;
-    margin-left: 60px;
   }
   .gravatar {
-    float: left;
+    float: unset;
     margin-right: 10px;
     margin-top: 5px;
   }
@@ -248,4 +247,8 @@ span.picture {
   input {
     border: 0;
   }
+}
+
+.custom-gravatar {
+  float: left;
 }

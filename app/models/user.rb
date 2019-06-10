@@ -62,12 +62,17 @@ class User < ApplicationRecord
   end
 
   def password_reset_expired?
-    reset_sent_at < 2.hours.ago
+    reset_sent_at < Settings.password_reset_expired.hours.ago
+  end
+
+  def feed
+    Micropost.where "user_id = ?", id
   end
 
   private
+
   def downcase_email
-    self.email = email.downcase
+    email.downcase!
   end
 
   def create_activation_digest

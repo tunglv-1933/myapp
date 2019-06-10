@@ -1,58 +1,33 @@
 class MicropostsController < ApplicationController
-  before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: %i(create destroy)
+  before_action :correct_user, only: %i(destroy)
 
   def index
-    @microposts = User.page(params[:page]).per(Settings.user_per_page).order(id: :desc)
+    @microposts = User.page(params[:page]).per(Settings.user_per_page).order_by_created_at
   end
-
-  def show; end
-
-  def new
-    @micropost = Micropost.new
-  end
-
-  def edit; end
 
   def create
-    @micropost = Micropost.new(micropost_params)
-
-    respond_to do |format|
-      if @micropost.save
-        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
-        format.json { render :show, status: :created, location: @micropost }
-      else
-        format.html { render :new }
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @micropost.update(micropost_params)
-        format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
-        format.json { render :show, status: :ok, location: @micropost }
-      else
-        format.html { render :edit }
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
-      end
+    @micropost = current_user.microposts.build micropost_params
+    if @micropost.save
+      flash[:success] = t "micropost_created"
+      redirect_to root_url
+    else
+      @feed_items = []
+      render "static_pages/home"
     end
   end
 
   def destroy
-    @micropost.destroy
-    respond_to do |format|
-      format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
-    def set_micropost
-      @micropost = Micropost.find(params[:id])
-    end
 
-    def micropost_params
-      params.require(:micropost).permit(:content, :user_id)
-    end
+  def micropost_params
+    params.require(:micropost).permit :content, :picture
+  end
+
+  def correct_user
+    @micropost = current_user.microposts.find_by id: params[:id]
+    redirect_to root_url if @micropost.nil?
+  end
 end
