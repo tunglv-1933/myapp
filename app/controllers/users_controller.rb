@@ -5,11 +5,13 @@ class UsersController < ApplicationController
   before_action :admin_user, only: %i(destroy)
 
   def index
-    @users = User.page(params[:page]).per(Settings.user_per_page).order_by_name(:desc)
+    @users = User.page(params[:page]).per(Settings.user_per_page)
+      .order_by_name :desc
   end
 
   def show
-    @microposts = @user.microposts.page(params[:page]).per(Settings.user_per_page)
+    @microposts = @user.microposts.page(params[:page])
+      .per Settings.user_per_page
   end
 
   def new
@@ -48,6 +50,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def following
+    @title = t "following_upercase"
+    @user  = User.find params[:id]
+    @users = @user.following.page(params[:page]).per Settings.user_per_page
+    render "show_follow"
+  end
+
+  def followers
+    @title = t "followers_upercase"
+    @user  = User.find params[:id]
+    @users = @user.followers.page(params[:page]).per Settings.user_per_page
+    render "show_follow"
+  end
+
   private
 
   def set_user
@@ -66,7 +82,7 @@ class UsersController < ApplicationController
 
   def correct_user
     @user = User.find_by id: params[:id]
-    return if current_user?(@user)
+    return if current_user? @user
     redirect_to root_path
   end
 
