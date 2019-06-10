@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, excerpt: %i(index new create)
+  before_action :set_user, only: %i(show update destroy)
+  before_action :logged_in_user, only: %i(edit update)
+  before_action :correct_user, only: %i(edit update)
+  before_action :admin_user, only: %i(destroy)
 
   def index
-    @users = User.all
+    @users = User.page(params[:page]).per(Settings.user_per_page).ordered_by_name(:desc)
   end
 
   def show; end
@@ -17,6 +20,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
+      log_in user
       flash[:success] = t "welcome_to_the_sample_app"
       redirect_to @user
     else
@@ -44,17 +48,33 @@ class UsersController < ApplicationController
 
   private
 
-    def set_user
-      @user = User.find_by id: params[:id]
-      return if @user
-      render file: "#{Rails.root}/public/404", status: :not_found
-    end
+  def set_user
+    @user = User.find_by id: params[:id]
+    return if @user
+    render file: "#{Rails.root}/public/404", status: :not_found
+  end
 
-    def user_params
-      params.require(:user).permit :name, :email, :password, :password_confirmation
-    end
+  def user_params
+    params.require(:user).permit :name, :email, :password, :password_confirmation
+  end
 
-    def not_found
-      render :status => 404
-    end
+  def not_found
+    render :status => 404
+  end
+
+  def logged_in_user
+    return if logged_in?
+    store_location
+    flash[:danger] = t "please_log_in"
+    redirect_to login_url
+  end
+
+  def correct_user
+    @user = User.find_by id: params[:id]
+    redirect_to root_path unless current_user?(user)
+  end
+
+  def admin_user
+    redirect_to root_url unless current_user.admin?
+  end
 end
