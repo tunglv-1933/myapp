@@ -1,16 +1,7 @@
-<% provide(:title, t("all_users")) %>
-<h1><%= t "all_users" %></h1>
-
-<%= paginate @users %>
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= gravatar_for user, size: Settings.gravatar_medium_size %>
-      <%= link_to user.name, user %>
-      <% if current_user.admin? && !current_user?(user) %>
-        | <%= link_to t("delete"), user, method: :delete, data: { confirm: t("are_you_sure") } %>
-      <% end %>
-    </li>
+<li>
+  <%= gravatar_for user, size: Settings.gravatar_medium_size %>
+  <%= link_to user.name, user %>
+  <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to t("delete"), user, method: :delete, data: { confirm: t("are_you_sure") } %>
   <% end %>
-</ul>
-<%= paginate @users %>
+</li>
