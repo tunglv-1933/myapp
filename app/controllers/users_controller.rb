@@ -64,16 +64,10 @@ class UsersController < ApplicationController
     render :status => 404
   end
 
-  def logged_in_user
-    return if logged_in?
-    store_location
-    flash[:danger] = t "please_log_in"
-    redirect_to login_url
-  end
-
   def correct_user
     @user = User.find_by id: params[:id]
-    redirect_to root_path unless current_user?(user)
+    return if current_user?(@user)
+    redirect_to root_path
   end
 
   def admin_user

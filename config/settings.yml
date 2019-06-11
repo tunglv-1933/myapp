@@ -16,3 +16,6 @@ validates:
       minimum: 6
 user_per_page: 5
 post_per_page: 5
+max_image_size: 5
+max_content_length: 140
+password_reset_expired: 2
